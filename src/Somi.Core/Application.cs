@@ -28,8 +28,8 @@ namespace Somi.Core
             while (Window.IsOpen)
             {
                 Window.ProcessEvents();
-                OnUpdate?.Invoke();
                 Window.Render();
+                OnUpdate?.Invoke();
             }
 
             Window.Dispose();

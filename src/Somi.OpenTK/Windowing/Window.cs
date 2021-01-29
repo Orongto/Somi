@@ -23,6 +23,7 @@ namespace Somi.OpenTK.Windowing
 
             NativeWindow.CenterWindow();
             NativeWindow.MakeCurrent();
+            GL.ClearColor(0, 0, 0, 1);
         }
 
         public Vector2I Position
@@ -74,10 +75,11 @@ namespace Somi.OpenTK.Windowing
 
         public void Render()
         {
+            NativeWindow.Context.SwapBuffers();
+
+            GL.Clear(ClearBufferMask.ColorBufferBit);
             var size = Size;
             GL.Viewport(0, 0, size.X, size.Y);
-
-            NativeWindow.Context.SwapBuffers();
         }
 
         public void Dispose()
