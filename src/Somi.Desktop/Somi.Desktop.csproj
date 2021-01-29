@@ -5,4 +5,18 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Somi.Core\Somi.Core.csproj" />
+      <ProjectReference Include="..\Somi.OpenTK\Somi.OpenTK.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="testImage.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="testImage2.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
