@@ -20,9 +20,11 @@ namespace Somi.OpenTK.Windowing
                 Size = new global::OpenTK.Mathematics.Vector2i(size.X, size.Y),
                 Title = title,
                 NumberOfSamples = 16,
+                StartVisible = false
             });
 
             NativeWindow.CenterWindow();
+            NativeWindow.IsVisible = true;
             NativeWindow.MakeCurrent();
             GL.ClearColor(0, 0, 0, 1);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
