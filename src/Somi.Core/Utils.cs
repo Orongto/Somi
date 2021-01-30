@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Drawing;
 using System.Numerics;
 using Somi.Core;
@@ -10,7 +10,7 @@ namespace Somi.DefaultPlugins
     {
         public static Random RandomInstance { get; set; } = new Random();
 
-        public const float Pi = (float)Math.PI;
+        public const float Pi = (float) Math.PI;
         public const float Tau = 2 * Pi;
         public const float DegreeToRadian = Pi / 180f;
         public const float RadianToDegree = 180f / Pi;
@@ -23,18 +23,24 @@ namespace Somi.DefaultPlugins
 
         public static float Sin(float f)
         {
-            return (float)Math.Sin(f);
+            return (float) Math.Sin(f);
         }
 
         public static float Cos(float f)
         {
-            return (float)Math.Cos(f);
+            return (float) Math.Cos(f);
         }
 
         public static float Distance(Vector2 a, Vector2 b)
         {
-            Vector2 c = a - b;
-            return (float)Math.Sqrt(c.X * c.X + c.Y * c.Y);
+            var c = a - b;
+            return (float) Math.Sqrt(c.X * c.X + c.Y * c.Y);
+        }
+
+        public static float Distance(Vector2I a, Vector2I b)
+        {
+            var c = a - b;
+            return (float) Math.Sqrt((float) c.X * (float) c.X + (float) c.Y * (float) c.Y);
         }
 
         public static float Abs(float a)
@@ -55,7 +61,7 @@ namespace Somi.DefaultPlugins
 
         public static float Atan2(float a, float b)
         {
-            return (float)Math.Atan2(a, b);
+            return (float) Math.Atan2(a, b);
         }
 
         public static float Remainder(float a)
@@ -65,7 +71,7 @@ namespace Somi.DefaultPlugins
 
         public static float Floor(float a)
         {
-            return (float)Math.Floor(a);
+            return (float) Math.Floor(a);
         }
 
         public static Vector2 Floor(Vector2 v)
@@ -104,12 +110,13 @@ namespace Somi.DefaultPlugins
             {
                 result = Lerp(a, b, c);
             }
+
             return result;
         }
 
         public static float Sigmoid(double value)
         {
-            return 1.0f / (1.0f + (float)Math.Exp(-value));
+            return 1.0f / (1.0f + (float) Math.Exp(-value));
         }
 
         public static int MinMax(int min, int max, int value)
@@ -151,7 +158,7 @@ namespace Somi.DefaultPlugins
 
         public static float Sqrt(float f)
         {
-            return (float)Math.Sqrt(f);
+            return (float) Math.Sqrt(f);
         }
 
         public static Vector2 RadianToVector(float f)
@@ -191,12 +198,12 @@ namespace Somi.DefaultPlugins
 
         public static float RandomFloat(float min, float max)
         {
-            return Lerp(min, max, (float)RandomInstance.NextDouble());
+            return Lerp(min, max, (float) RandomInstance.NextDouble());
         }
 
         public static float RandomFloat()
         {
-            return (float)RandomInstance.NextDouble();
+            return (float) RandomInstance.NextDouble();
         }
 
         public static int RandomInt(int min, int max)
@@ -261,7 +268,7 @@ namespace Somi.DefaultPlugins
         }
 
 
-        public static bool IsPointInsideBounds(Vector2 point, Rectangle rect)
+        public static bool IsPointInsideBounds(Vector2 point, RectangleF rect)
         {
             if (point.X < rect.Left) return false;
             if (point.Y < rect.Top) return false;

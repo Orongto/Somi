@@ -55,6 +55,8 @@ namespace Somi.Core.Graphics
         public static readonly Color Green = new Color(0, 1f, 0);
         public static readonly Color Magenta = new Color(1f, 0, 1f);
 
+        public static Color Greyscale(float whiteness) => new Color(whiteness, whiteness, whiteness, 1);
+
         public static bool operator ==(Color left, Color right)
         {
             return left.Equals(right);
@@ -72,7 +74,17 @@ namespace Somi.Core.Graphics
                 left.G * right.G,
                 left.B * right.B,
                 left.A * right.A
-                );
+            );
+        }
+
+        public static Color operator /(Color left, float right)
+        {
+            return new Color(
+                left.R / right,
+                left.G / right,
+                left.B / right,
+                left.A / right
+            );
         }
 
         public static Color operator *(float v, Color c)
@@ -82,7 +94,7 @@ namespace Somi.Core.Graphics
                 c.G * v,
                 c.B * v,
                 c.A * v
-                );
+            );
         }
 
         public static Color operator *(Color c, float v)
@@ -92,7 +104,7 @@ namespace Somi.Core.Graphics
                 c.G * v,
                 c.B * v,
                 c.A * v
-                );
+            );
         }
 
         public static bool operator >(Color left, Color right)
@@ -112,6 +124,7 @@ namespace Somi.Core.Graphics
                 left.B < right.B &&
                 left.A < right.A;
         }
+
         public static bool operator >=(Color left, Color right)
         {
             return

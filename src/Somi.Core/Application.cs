@@ -29,8 +29,9 @@ namespace Somi.Core
             while (Window.IsOpen)
             {
                 Window.ProcessEvents();
-                Window.Render();
                 OnUpdate?.Invoke();
+                Window.Render();
+                Window.Input.RefreshInput();
             }
 
             Window.Dispose();

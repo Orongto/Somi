@@ -9,10 +9,13 @@ namespace Somi.Desktop
 {
     class Program
     {
+        
+ 
+        
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            var window = new OpenTK.Windowing.Window("Somi is een tijdelijke naam", new Vector2I(1280, 720))
+            var window = new OpenTK.Windowing.Window("Somi Editor", new Vector2I(1280, 720))
             {
                 Resizable = true
             };
@@ -29,25 +32,19 @@ namespace Somi.Desktop
 
 
             DefaultPluginsLoader.Load(UIContext.Root);
-
+            var uihandler = new UIHandler();
             //dit event gedoe is tijdelijk hoop ik
             void OnApplicationOnOnUpdate()
             {
                 Application.Graphics.Projection = window.CalculateProjection();
 
-                
-                Draw(UIContext.Root);
+                uihandler.Update();
 
                 while (Application.RenderQueue.Tasks.Count != 0)
                 {
                     var drawable = Application.RenderQueue.Tasks.Dequeue();
                     Application.Graphics.Draw(drawable);
                 }
-
-         
-                
-                //Application.Graphics.Draw(drawable1);
-                // Application.Graphics.Draw(drawable2);
             }
 
             Application.OnUpdate += OnApplicationOnOnUpdate;
@@ -58,16 +55,6 @@ namespace Somi.Desktop
             );
         }
 
-        private static void Draw(UIElement root)
-        {
-            root.Draw();
-            
-            if (root.Children != null)
-                foreach (var child in root.Children)
-                {
-                    Draw(child);
-                }
-            
-        }
+       
     }
 }

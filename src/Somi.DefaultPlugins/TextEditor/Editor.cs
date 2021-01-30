@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Reflection.Metadata.Ecma335;
@@ -17,7 +18,7 @@ namespace Somi.DefaultPlugins
     public class Editor : UIElement
     {
         private string[] lines;
-        private List<Position> Cursors;
+        private List<Vector2I> Cursors;
         private string currentSelectedFilePath;
 
         private TextDrawableGenerator generator;
@@ -25,12 +26,11 @@ namespace Somi.DefaultPlugins
         public Editor()
         {
             generator = new TextDrawableGenerator(new BMFont("Resources/Fonts/cascadia.fnt"));
-            generator.Text = "Somi is cool";
+            generator.Text = "Somi Editor. Waarom is de tekst zo krom? maybe door de font png.";
             generator.Color = Color.White;
-            generator.ScaleStyle = ScaleStyle.ForceSize;
-            generator.InvertedY = true;
+            generator.ScaleStyle = ScaleStyle.ForceLineHeight;
         }
-        
+
         public void Start()
         {
             EditorWideEvents.OnSelectedFileChanged += EditorWideEventsOnOnSelectedFileChanged;
@@ -68,24 +68,28 @@ namespace Somi.Desktop
             {
                 Render(child);
             }
-*/          
+*/
 
-                
 
             var drawable1 = new Drawable(
                 PrimitiveMeshes.Quad,
                 Texture.LoadFromFile("testImage.png"),
-                new TransformData(new Vector2(10,10), new Vector2(100,100)).CalcModelMatrix());
+                new TransformData(new Vector2(10, 10), new Vector2(100, 100)).CalcModelMatrix());
 
-            Application.Graphics.Projection = Matrix4x4.CreateOrthographicOffCenter(0, Application.Window.Size.X, Application.Window.Size.Y, 0, 1, 10);
 
-            RenderQueue.DrawRect(CalculatedPosition, new Vector2I(400,400), Color.Green);
-            RenderQueue.Add(generator.GetDrawable());
+            RenderQueue.DrawRect(Position, Size, new Color(26, 24, 29));
             
-           //RenderQueue.Add(drawable1);
             
-  
-   
+           // if (IsHovering)
+           //     RenderQueue.DrawRect(Position, Size, new Color(36, 24, 29));
+            
+            if (IsClicked)
+                RenderQueue.DrawRect(Position, Size, new Color(36, 34, 39));
+            
+            var drawable = generator.GetDrawable(new TransformData(Position, Vector2.One * 32).CalcModelMatrix());
+            RenderQueue.Add(drawable);
+
+            //RenderQueue.Add(drawable1);
         }
 
         private void Render(SyntaxNode node)

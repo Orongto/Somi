@@ -38,17 +38,7 @@ namespace Nurose.Text
                 needUpdate = true;
             }
         }
-
-        public bool InvertedY
-        {
-            get => invertY;
-            set
-            {
-                invertY = value;
-                needUpdate = true;
-            }
-        }
-
+        
         public bool Centered
         {
             get => centered;
@@ -154,7 +144,6 @@ namespace Nurose.Text
                 uvMin = new Vector2(uvMin.X, 1 - uvMin.Y);
                 uvMax = new Vector2(uvMax.X, 1 - uvMax.Y);
                 
-                //Offset = new Vector2(currentX + fontChar.XOffset, BMFont.FontFile.Common.Base - fontChar.Height - fontChar.YOffset);
                 vertices[i * 6 + 0] = new Vertex(new Vector3(Offset + new Vector2(0, 0) * size, z),new Vector2(uvMin.X,uvMin.Y), Color);
                 vertices[i * 6 + 1] = new Vertex(new Vector3(Offset + new Vector2(0, 1) * size, z),new Vector2(uvMin.X,uvMax.Y), Color);
                 vertices[i * 6 + 2] = new Vertex(new Vector3(Offset + new Vector2(1, 1) * size, z),new Vector2(uvMax.X,uvMax.Y), Color);
@@ -196,12 +185,12 @@ namespace Nurose.Text
             mesh.GenerateLinearIndices();
         }
 
-        public Drawable GetDrawable()
+        public Drawable GetDrawable(Matrix4x4 matrix)
         {
            if(needUpdate)
                 UpdateBuffer();
             
-            return new Drawable(mesh, bMFont.Texture, Matrix4x4.CreateScale(400, 400, 1), Color.White);
+            return new Drawable(mesh, bMFont.Texture, matrix , Color.White);
         }
     }
 }

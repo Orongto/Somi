@@ -14,7 +14,7 @@ namespace Somi.Core.Graphics
         public bool IsOpen { get; }
         public bool Resizable { get; set; }
         public string Title { get; set; }
-
+        public Input Input { get; }
         public void ProcessEvents();
         public void Render();
 

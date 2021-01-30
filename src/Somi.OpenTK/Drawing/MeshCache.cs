@@ -51,6 +51,9 @@ namespace Somi.OpenTK.Drawing
 
         public static void UploadData(Mesh mesh, MeshHandles handles)
         {
+            //idk of dit hier hoort maar het fix de text rendering bug.
+            GL.BindVertexArray(handles.VAO);
+            
             //upload vertices
             GL.BindBuffer(BufferTarget.ArrayBuffer, handles.VBO);
             GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(mesh.Vertices.Length * sizeofVertex), mesh.Vertices, BufferUsageHint.StaticDraw);
@@ -58,6 +61,7 @@ namespace Somi.OpenTK.Drawing
             //upload indices
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, handles.IBO);
             GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(mesh.IndexCount * sizeof(uint)), mesh.Indices, BufferUsageHint.StaticDraw);
+            
 
             mesh.NeedsUpdate = false;
         }

@@ -11,6 +11,7 @@ namespace Somi.OpenTK.Windowing
     public class Window : IWindow
     {
         internal NativeWindow NativeWindow;
+        public Input Input { get; private set; }
 
         public Window(string title, Vector2I size)
         {
@@ -19,9 +20,10 @@ namespace Somi.OpenTK.Windowing
                 IsEventDriven = true,
                 Size = new global::OpenTK.Mathematics.Vector2i(size.X, size.Y),
                 Title = title,
-                NumberOfSamples = 16,
+                NumberOfSamples = 8,
                 StartVisible = false
             });
+            Input = new OpenTKInput(this);
 
             NativeWindow.CenterWindow();
             NativeWindow.IsVisible = true;
@@ -96,7 +98,7 @@ namespace Somi.OpenTK.Windowing
         public Matrix4x4 CalculateProjection()
         {
             var size = Size;
-            return Matrix4x4.CreateOrthographic(size.X, size.Y, 0.1f, 100);
+            return Matrix4x4.CreateOrthographicOffCenter(0, Application.Window.Size.X, Application.Window.Size.Y, 0, 0.1f, 100);
         }
     }
 }
