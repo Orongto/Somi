@@ -8,6 +8,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Somi.Core\Somi.Core.csproj" />
       <ProjectReference Include="..\Somi.OpenTK\Somi.OpenTK.csproj" />
+      <ProjectReference Include="..\Somi.UI\Somi.UI.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -17,6 +18,23 @@
       <None Update="testImage2.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Resources\Fonts\cascadia.fnt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Fonts\cascadia_0.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Somi.DefaultPlugins\Somi.DefaultPlugins.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
     </ItemGroup>
 
 </Project>

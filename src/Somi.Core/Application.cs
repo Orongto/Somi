@@ -1,6 +1,5 @@
 ﻿using Somi.Core.Graphics;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -13,6 +12,8 @@ namespace Somi.Core
         public static IWindow Window { get; private set; }
         public static IGraphics Graphics { get; private set; }
 
+        public static RenderQueue RenderQueue = new();
+        
         public static event Action OnUpdate;
 
         public static void Start(IWindow window, IGraphics graphics)

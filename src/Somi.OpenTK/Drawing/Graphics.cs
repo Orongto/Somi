@@ -16,6 +16,7 @@ namespace Somi.OpenTK.Drawing
             var texture = drawable.Texture;
 
             var handles = Storage.Meshes.Load(mesh);
+            
             if (mesh.NeedsUpdate)
                 MeshCache.UploadData(mesh, handles);
 
@@ -25,6 +26,7 @@ namespace Somi.OpenTK.Drawing
 
             currentMaterial.SetUniform(ShaderConstants.ProjectionUniformName, Projection);
             currentMaterial.SetUniform(ShaderConstants.ModelUniformName, drawable.Transformation);
+            currentMaterial.SetUniform(ShaderConstants.TintUniformName, drawable.Tint);
 
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, Storage.Textures.Load(drawable.Texture).Index);
