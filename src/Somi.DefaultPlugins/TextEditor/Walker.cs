@@ -57,7 +57,6 @@ namespace Somi.DefaultPlugins
                     break;
             }
 
-
             Console.Write(token.SyntaxTree.GetText().GetSubText(token.FullSpan));
             base.VisitToken(token);
         }

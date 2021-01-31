@@ -62,12 +62,10 @@ namespace Somi.UI
         /// </summary>
         public virtual void DroppedInVoid()
         {
-
         }
         
         public virtual void OnDropped()
-        {
-            
+        {       
         }
 
         public void AddChild(UIElement child)

@@ -9,17 +9,12 @@ namespace Somi.Desktop
 {
     class Program
     {
-        
- 
-        
         static void Main(string[] args)
         {
             var window = new OpenTK.Windowing.Window("Somi Editor", new Vector2I(1280, 720))
             {
                 Resizable = true
             };
-
-         
 
             DefaultPluginsLoader.Load(UIContext.Root);
             var uihandler = new UIHandler();
@@ -44,7 +39,5 @@ namespace Somi.Desktop
                 new OpenTK.Drawing.Graphics()
             );
         }
-
-       
     }
 }

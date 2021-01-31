@@ -86,7 +86,6 @@ namespace Nurose.Text
         {
             bMFont = fNTFont;
             UpdateFontInfo();
-
         }
 
         public TextDrawableGenerator()
@@ -145,8 +144,6 @@ namespace Nurose.Text
                 vertices[i * 6 + 3] = new Vertex(new Vector3(Offset + new Vector2(0, 0) * size, z),new Vector2(uvMin.X,uvMin.Y), Color);
                 vertices[i * 6 + 4] = new Vertex(new Vector3(Offset + new Vector2(1, 0) * size, z),new Vector2(uvMax.X,uvMin.Y), Color);
                 vertices[i * 6 + 5] = new Vertex(new Vector3(Offset + new Vector2(1, 1) * size, z),new Vector2(uvMax.X,uvMax.Y), Color);
-
-
     
                 if (currentX + size.X > maxX)
                     maxX = currentX + size.X;

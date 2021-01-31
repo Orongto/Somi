@@ -25,7 +25,7 @@ namespace Nurose.Text
             }
 
             Texture = Texture.LoadFromFile(Path.GetDirectoryName(path) + "\\" + FontFile.Pages[0].File);
-           // Texture.MinFilter = TextureFilter.Linear;            
+            //Texture.MinFilter = TextureFilter.Linear;            
             //Texture.MagFilter = TextureFilter.Linear;            
             foreach (var c in FontFile.Chars)
             {
