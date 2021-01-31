@@ -11,7 +11,5 @@ namespace Somi.Core
         {
             Tasks.Enqueue(drawable);
         }
-        
-
     }
 }

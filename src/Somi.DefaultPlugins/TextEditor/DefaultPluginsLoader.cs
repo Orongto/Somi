@@ -10,7 +10,6 @@ namespace Somi.DefaultPlugins
             int leftPaneWidth = 300;
             int navHeight = 30;
             
-            
             root.AddChild(new PlaceholderElement()
             {
                 Text = "Solution Explorer",
@@ -22,7 +21,6 @@ namespace Somi.DefaultPlugins
                     Height = new ConstraintProperty(new HeightRatioConstraint(1), new PixelConstraint(-navHeight))
                 }
             });
-
             
             root.AddChild(new Editor()
             {
@@ -36,8 +34,6 @@ namespace Somi.DefaultPlugins
             });
             
             MenuBarPrefab.Instantiate(root, navHeight);
-
-            
             //UIMaker.AddChild(root, new Editor());
         }
     }

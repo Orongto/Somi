@@ -67,7 +67,6 @@ namespace Somi.Desktop
                     }
                 }
 
-
                 if (element.IsDragging && released)
                     draggingLetGo = true;
 
@@ -87,7 +86,7 @@ namespace Somi.Desktop
 
                 if (element.IsPressed && element.IsActive)
                     element.IsClicked = true;
-                
+
 
                 if (element.IsHovering && released && data.DragPayload != null)
                 {
@@ -95,7 +94,6 @@ namespace Somi.Desktop
                     data.Dragging = null;
                     data.DragPayload = null;
                 }
-
 
                 PropageteToNonInteractableChildren(element);
             }
@@ -150,7 +148,6 @@ namespace Somi.Desktop
             return parent.IsEnabled && AllParentEnabled(parent);
         }
 
-
         private static void DeselectElements(List<UIElement> elements)
         {
             foreach (var e in elements)
@@ -159,7 +156,6 @@ namespace Somi.Desktop
                     e.IsSelected = false;
             }
         }
-
 
         private static void PropageteToNonInteractableChildren(UIElement element)
         {

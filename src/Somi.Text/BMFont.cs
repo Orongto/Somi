@@ -31,7 +31,6 @@ namespace Nurose.Text
             {
                 fontchars.Add((char)c.ID, c);
             }
-
         }
     }
 }

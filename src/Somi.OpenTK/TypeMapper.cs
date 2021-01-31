@@ -16,5 +16,11 @@ namespace Somi.OpenTK
             Primitive.TriangleFan => PrimitiveType.TriangleFan,
             _ => PrimitiveType.Triangles,
         };
+
+        public static TextureMagFilter Convert(TextureFilter filter) => filter switch
+        {
+            TextureFilter.Nearest => TextureMagFilter.Nearest,
+            TextureFilter.Linear => TextureMagFilter.Linear,
+        };
     }
 }

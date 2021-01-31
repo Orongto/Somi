@@ -12,7 +12,6 @@ namespace Somi.UI
         public UIElement Parent;
         public List<UIElement> Children;
 
-
         public Anchor Anchor;
 
         public RenderQueue RenderQueue => Application.RenderQueue;
@@ -31,12 +30,10 @@ namespace Somi.UI
         public bool IsClicked;
 
         public Vector2I LastPressedPosition;
-
         
         public IEnumerable<UIElement> DecendantsIncludingSelf()
         {
             yield return this;
-            
 
             if (Children != null)
                 foreach (var child in Children)
@@ -65,6 +62,7 @@ namespace Somi.UI
         /// </summary>
         public virtual void DroppedInVoid()
         {
+
         }
         
         public virtual void OnDropped()
@@ -81,10 +79,5 @@ namespace Somi.UI
 
             Children.Add(child);
         }
-
-        
-
-
-
     }
 }

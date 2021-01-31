@@ -30,5 +30,4 @@ namespace Nurose.Text
             }
         }
     }
-
 }

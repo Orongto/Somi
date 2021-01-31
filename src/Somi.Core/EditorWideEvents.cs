@@ -2,7 +2,6 @@
 
 namespace Somi.Core
 {
-
     public class PathEventArgs : EventArgs
     {
         public string Path { get; init; }

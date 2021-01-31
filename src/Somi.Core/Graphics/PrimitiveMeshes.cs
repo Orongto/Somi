@@ -18,8 +18,6 @@ namespace Somi.Core.Graphics
                 0, 3, 2
             }
         );
-
-        
         
         public static readonly Mesh Quad = new Mesh(
             new Vertex[]

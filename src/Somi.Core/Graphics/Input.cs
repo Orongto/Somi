@@ -2,8 +2,6 @@
 
 namespace Somi.Core.Graphics
 {
-    
-    
     public abstract class Input
     {
         public abstract InputState State { get; set; }
@@ -24,7 +22,6 @@ namespace Somi.Core.Graphics
             State.PreviousMousePosition = MousePosition;
             State.CharInputs = "";
         }
-
 
         public bool IsKeyHeld(Key key) => State.KeysHeld.Contains(key);
         public bool IsKeyPressed(Key key) => State.KeysPressed.Contains(key);

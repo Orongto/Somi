@@ -71,7 +71,6 @@ namespace Nurose.Text
 
         public float Depth { get; set; } = 5;
 
-
         private Color color = Color.White;
         private bool needUpdate = true;
         private bool centered = false;
@@ -93,7 +92,6 @@ namespace Nurose.Text
         public TextDrawableGenerator()
         {
         }
-
 
         private void UpdateFontInfo()
         {

@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Reflection.Metadata.Ecma335;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Classification;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Text;
 using Nurose.Text;
 using Somi.Core;
 using Somi.Core.Graphics;

@@ -18,7 +18,7 @@ namespace Somi.Desktop
 
             UIStateRefresher.RefreshState(Data, orderedElements);
 
-            DrawRecursivly(UIContext.Root);
+            DrawRecursively(UIContext.Root);
         }
 
         private static List<UIElement> GetOrderedElements()
@@ -27,7 +27,6 @@ namespace Somi.Desktop
             orderedElements.Reverse();
             return orderedElements;
         }
-
 
         private static void CalculateConstraints(IEnumerable<UIElement> elements)
         {
@@ -42,15 +41,13 @@ namespace Somi.Desktop
             }
         }
 
-
-        private static void DrawRecursivly(UIElement root)
+        private static void DrawRecursively(UIElement root)
         {
             root.Draw();
 
             if (root.Children != null)
                 foreach (var child in root.Children)
-                    DrawRecursivly(child);
-            
+                    DrawRecursively(child);
         }
     }
 }
