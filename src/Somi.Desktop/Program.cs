@@ -19,7 +19,7 @@ namespace Somi.Desktop
             DefaultPluginsLoader.Load(UIContext.Root);
             var uihandler = new UIHandler();
             //dit event gedoe is tijdelijk hoop ik
-            void OnApplicationOnOnUpdate()
+            void OnApplicationUpdate()
             {
                 Application.Graphics.Projection = window.CalculateProjection();
 
@@ -32,7 +32,7 @@ namespace Somi.Desktop
                 }
             }
 
-            Application.OnUpdate += OnApplicationOnOnUpdate;
+            Application.OnUpdate += OnApplicationUpdate;
 
             Application.Start(
                 window,
