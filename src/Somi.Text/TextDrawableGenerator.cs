@@ -11,7 +11,7 @@ namespace Nurose.Text
         ForceLineHeight,
         ForceSize
     }
-
+    
     public class TextDrawableGenerator
     {
         public BMFont BMFont
@@ -82,19 +82,16 @@ namespace Nurose.Text
         private Vector2 pixelSize;
         private ScaleStyle scaleStyle;
         private BMFont bMFont;
-        private readonly Mesh mesh;
 
         public TextDrawableGenerator(BMFont fNTFont)
         {
             bMFont = fNTFont;
             UpdateFontInfo();
 
-            mesh = new Mesh(Array.Empty<Vertex>());
         }
 
         public TextDrawableGenerator()
         {
-            mesh = new Mesh(Array.Empty<Vertex>());
         }
 
 
@@ -116,7 +113,7 @@ namespace Nurose.Text
             return (int) (width / (float) BMFont.FontFile.Info.Size * lineheight);
         }
 
-        private void UpdateBuffer()
+        public void UpdateBuffer(Mesh mesh)
         {
             Vertex[] vertices = new Vertex[Text.Length * 6];
             int currentX = 0;
@@ -183,14 +180,6 @@ namespace Nurose.Text
 
             mesh.Vertices = vertices;
             mesh.GenerateLinearIndices();
-        }
-
-        public Drawable GetDrawable(Matrix4x4 matrix)
-        {
-           if(needUpdate)
-                UpdateBuffer();
-            
-            return new Drawable(mesh, bMFont.Texture, matrix , Color.White);
         }
     }
 }

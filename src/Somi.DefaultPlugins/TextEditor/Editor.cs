@@ -15,20 +15,78 @@ using Color = Somi.Core.Graphics.Color;
 
 namespace Somi.DefaultPlugins
 {
+    public class CachedWordMesh
+    {
+        public Mesh Mesh;
+        public int Width;
+    }
+
+    public class CachedLineRenderer
+    {
+        public Dictionary<string, CachedWordMesh> cachedMeshes = new();
+        private TextDrawableGenerator generator;
+        private int lineHeight = 21;
+        private int lineMargin = 0;
+        private string[] keywords = new[] {"public", "private", "namespace", "using", "static", "void", "class", "string", "new"};
+        private string[] keywords2 = new[] {"(",")","[","]",";", "\"", ".", ","};
+        public CachedLineRenderer()
+        {
+            generator = new TextDrawableGenerator(new BMFont("Resources/Fonts/cascadia.fnt"));
+            generator.Text = "public static void Somi()";
+            generator.Color = Color.White;
+            generator.ScaleStyle = ScaleStyle.ForceLineHeight;
+        }
+
+        public void Render(string[] lines, Vector2I Offset)
+        {
+            for (var i = 0; i < lines.Length; i++)
+            {
+                var line = lines[i];
+
+                var words = line.InclusiveSplit("\\s|\\[|\\]|\\(|\\)|\\.|\\,").ToArray();
+
+                int xPos = 0;
+                foreach (var word in words)
+                {
+                    if (!cachedMeshes.ContainsKey(word))
+                    {
+                        generator.Text = word;
+                        var newmesh = new Mesh();
+                        generator.UpdateBuffer(newmesh);
+                        cachedMeshes.Add(word, new CachedWordMesh {Mesh = newmesh, Width = generator.CalcTextWidth(lineHeight, word)});
+                    }
+
+                    var cachedWordMesh = cachedMeshes[word];
+
+                    var color = Color.Greyscale(.8f);
+                    
+                    if (keywords.Contains(word.Trim()))
+                        color = Color.Magenta;
+                    
+                    if (keywords2.Contains(word.Trim()))
+                        color = Color.Green;
+                    
+                    var position = new Vector2(Offset.X + xPos, Offset.Y + i * (lineHeight + lineMargin));
+                    Application.RenderQueue.Add(new Drawable(cachedWordMesh.Mesh, generator.BMFont.Texture,
+                        new TransformData(position, Vector2.One * lineHeight).CalcModelMatrix(), color));
+                    
+                    xPos += cachedWordMesh.Width;
+                }
+            }
+        }
+    }
+
+
     public class Editor : UIElement
     {
         private string[] lines;
         private List<Vector2I> Cursors;
         private string currentSelectedFilePath;
-
-        private TextDrawableGenerator generator;
+        private CachedLineRenderer lineRenderer;
 
         public Editor()
         {
-            generator = new TextDrawableGenerator(new BMFont("Resources/Fonts/cascadia.fnt"));
-            generator.Text = "Somi Editor. Waarom is de tekst zo krom? maybe door de font png.";
-            generator.Color = Color.White;
-            generator.ScaleStyle = ScaleStyle.ForceLineHeight;
+            lineRenderer = new CachedLineRenderer();
         }
 
         public void Start()
@@ -45,8 +103,7 @@ namespace Somi.DefaultPlugins
         public override void Draw()
         {
             lines =
-                @"
-using System;
+                @"using System;
 
 namespace Somi.Desktop
 {
@@ -78,16 +135,16 @@ namespace Somi.Desktop
 
 
             RenderQueue.DrawRect(Position, Size, new Color(26, 24, 29));
-            
-            
-           // if (IsHovering)
-           //     RenderQueue.DrawRect(Position, Size, new Color(36, 24, 29));
-            
-            if (IsClicked)
-                RenderQueue.DrawRect(Position, Size, new Color(36, 34, 39));
-            
-            var drawable = generator.GetDrawable(new TransformData(Position, Vector2.One * 32).CalcModelMatrix());
-            RenderQueue.Add(drawable);
+
+
+            //if (IsClicked)
+         //       RenderQueue.DrawRect(Position, Size, Color.Green);
+
+
+            lineRenderer.Render(lines, Position + new Vector2I(1, 1));
+
+            //  var drawable = generator.GetDrawable(new TransformData(Position, Vector2.One * 21).CalcModelMatrix());
+            // RenderQueue.Add(drawable);
 
             //RenderQueue.Add(drawable1);
         }

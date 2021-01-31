@@ -8,6 +8,9 @@ namespace Somi.Core.Graphics
         public int Width { get; }
         public int Height { get; }
 
+        public TextureFilter MinFilter = TextureFilter.Nearest;
+        public TextureFilter MagFilter = TextureFilter.Nearest;
+        
         private readonly Color[] pixels;
 
         public Texture(int width, int height, Color[] pixels)

@@ -14,22 +14,12 @@ namespace Somi.Desktop
         
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
             var window = new OpenTK.Windowing.Window("Somi Editor", new Vector2I(1280, 720))
             {
                 Resizable = true
             };
 
-            var drawable1 = new Drawable(
-                PrimitiveMeshes.CenteredQuad,
-                Texture.LoadFromFile("testImage.png"),
-                Matrix4x4.CreateScale(256, 256, 1));
-
-            var drawable2 = new Drawable(
-                PrimitiveMeshes.CenteredQuad,
-                Texture.LoadFromFile("testImage2.png"),
-                Matrix4x4.CreateScale(443, 222, 1) * Matrix4x4.CreateTranslation(320, 50, 0));
-
+         
 
             DefaultPluginsLoader.Load(UIContext.Root);
             var uihandler = new UIHandler();

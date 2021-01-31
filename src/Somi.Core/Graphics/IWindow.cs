@@ -12,6 +12,7 @@ namespace Somi.Core.Graphics
         public Vector2I Position { get; set; }
         public Vector2I Size { get; set; }
         public bool IsOpen { get; }
+        public bool IsVisible { get; set; }
         public bool Resizable { get; set; }
         public string Title { get; set; }
         public Input Input { get; }

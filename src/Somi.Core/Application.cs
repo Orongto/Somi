@@ -29,6 +29,7 @@ namespace Somi.Core
             while (Window.IsOpen)
             {
                 Window.ProcessEvents();
+            Window.IsVisible = true;
                 OnUpdate?.Invoke();
                 Window.Render();
                 Window.Input.RefreshInput();

@@ -5,6 +5,7 @@ using Somi.Core;
 using Somi.Core.Graphics;
 using System;
 using System.Numerics;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Somi.OpenTK.Windowing
 {
@@ -13,6 +14,12 @@ namespace Somi.OpenTK.Windowing
         internal NativeWindow NativeWindow;
         public Input Input { get; private set; }
 
+        public bool IsVisible
+        {
+            get { return NativeWindow.IsVisible; }
+            set { NativeWindow.IsVisible = value; }
+        }
+
         public Window(string title, Vector2I size)
         {
             NativeWindow = new NativeWindow(new NativeWindowSettings
@@ -20,17 +27,18 @@ namespace Somi.OpenTK.Windowing
                 IsEventDriven = true,
                 Size = new global::OpenTK.Mathematics.Vector2i(size.X, size.Y),
                 Title = title,
-                NumberOfSamples = 8,
-                StartVisible = false
+                NumberOfSamples = 0,
+                StartVisible = false,
             });
-            Input = new OpenTKInput(this);
-
-            NativeWindow.CenterWindow();
-            NativeWindow.IsVisible = true;
             NativeWindow.MakeCurrent();
+            NativeWindow.CenterWindow();
+            Input = new OpenTKInput(this);
             GL.ClearColor(0, 0, 0, 1);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             GL.Enable(EnableCap.Blend);
+
+            //Vsync enablen voor minder power consumption.
+            GLFW.SwapInterval(1);
         }
 
         public Vector2I Position
