@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Somi.UI;
+﻿using Somi.UI;
 
 namespace Somi.DefaultPlugins
 {
@@ -33,7 +32,19 @@ namespace Somi.DefaultPlugins
                 }
             });
             
+
             MenuBarPrefab.Instantiate(root, navHeight);
+     
+            root.AddChild(new FpsCounter()
+            {
+                Anchor = new Anchor()
+                {
+                    X = new ConstraintProperty(new PixelConstraint(0)),
+                    Y = new ConstraintProperty(new HeightRatioConstraint(1), new PixelConstraint(-21)),
+                    Width = new ConstraintProperty(new PixelConstraint(21)),
+                    Height = new ConstraintProperty(new PixelConstraint(21))
+                }
+            });
             //UIMaker.AddChild(root, new Editor());
         }
     }

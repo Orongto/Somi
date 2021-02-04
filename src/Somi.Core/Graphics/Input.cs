@@ -21,6 +21,7 @@ namespace Somi.Core.Graphics
             State.MouseWheelDelta = 0;
             State.PreviousMousePosition = MousePosition;
             State.CharInputs = "";
+            State.MousePosition = new Vector2I(-1, -1);
         }
 
         public bool IsKeyHeld(Key key) => State.KeysHeld.Contains(key);

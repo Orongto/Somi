@@ -104,6 +104,8 @@ namespace Nurose.Text
             foreach (char c in text)
             {
                 FontChar fontChar = BMFont.FindChar(c);
+                if (fontChar == null)
+                    fontChar = BMFont.FindChar('?');
                 width += fontChar.XAdvance;
             }
 

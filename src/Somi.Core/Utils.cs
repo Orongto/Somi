@@ -186,6 +186,11 @@ namespace Somi.DefaultPlugins
         {
             return a * (1.0f - c) + b * c;
         }
+        
+        public static Vector2I Lerp(Vector2I a, Vector2I b, float c)
+        {
+            return (Vector2I)Lerp((Vector2)a, (Vector2)b, c);
+        }
 
         public static Color Lerp(Color a, Color b, float c)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Somi.Core;
+using Somi.Core.Graphics;
 
 namespace Somi.UI
 {
@@ -28,6 +29,8 @@ namespace Somi.UI
         public bool IsDragging;
         public bool IsHeld;
         public bool IsClicked;
+
+        public IWindow Window => Application.Window;
 
         public Vector2I LastPressedPosition;
         

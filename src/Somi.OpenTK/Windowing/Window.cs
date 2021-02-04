@@ -13,7 +13,8 @@ namespace Somi.OpenTK.Windowing
     {
         internal NativeWindow NativeWindow;
         public Input Input { get; private set; }
-
+        public bool IsFocused => NativeWindow.IsFocused;
+        public float DeltaTime { get; set; }
         public bool IsVisible
         {
             get { return NativeWindow.IsVisible; }
@@ -38,7 +39,7 @@ namespace Somi.OpenTK.Windowing
             GL.Enable(EnableCap.Blend);
 
             //Vsync enablen voor minder power consumption.
-            GLFW.SwapInterval(1);
+           GLFW.SwapInterval(0);
         }
 
         public Vector2I Position
@@ -85,7 +86,13 @@ namespace Somi.OpenTK.Windowing
 
         public void ProcessEvents()
         {
+            if (NativeWindow.IsFocused)
+                Input.RefreshInput();
+
             NativeWindow.ProcessEvents();
+
+            NativeWindow.IsEventDriven = !NativeWindow.IsFocused;
+
         }
 
         public void Render()

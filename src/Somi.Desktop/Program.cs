@@ -1,8 +1,10 @@
 ﻿using Somi.Core;
 using Somi.Core.Graphics;
 using System;
+using System.Linq;
 using System.Numerics;
 using Somi.DefaultPlugins;
+using Somi.OpenTK.Windowing;
 using Somi.UI;
 
 namespace Somi.Desktop
@@ -11,6 +13,14 @@ namespace Somi.Desktop
     {
         static void Main(string[] args)
         {
+            if (args.Length > 0)
+            {
+                Application.Context.SelectedFilePath = args[0];
+            }
+            else
+            {
+            }
+
             var window = new OpenTK.Windowing.Window("Somi Editor", new Vector2I(1280, 720))
             {
                 Resizable = true
@@ -18,18 +28,21 @@ namespace Somi.Desktop
 
             DefaultPluginsLoader.Load(UIContext.Root);
             var uihandler = new UIHandler();
+
             //dit event gedoe is tijdelijk hoop ik
             void OnApplicationUpdate()
             {
                 Application.Graphics.Projection = window.CalculateProjection();
 
+
                 uihandler.Update();
 
-                while (Application.RenderQueue.Tasks.Count != 0)
-                {
-                    var drawable = Application.RenderQueue.Tasks.Dequeue();
-                    Application.Graphics.Draw(drawable);
-                }
+                if (Application.Window.IsOpen)
+                    while (Application.RenderQueue.Tasks.Count != 0)
+                    {
+                        var drawable = Application.RenderQueue.Tasks.Dequeue();
+                        Application.Graphics.Draw(drawable);
+                    }
             }
 
             Application.OnUpdate += OnApplicationUpdate;

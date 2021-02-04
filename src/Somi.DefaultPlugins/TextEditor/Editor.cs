@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using Microsoft.CodeAnalysis;
-using Nurose.Text;
 using Somi.Core;
 using Somi.Core.Graphics;
 using Somi.UI;
@@ -11,138 +11,49 @@ using Color = Somi.Core.Graphics.Color;
 
 namespace Somi.DefaultPlugins
 {
-    public class CachedWordMesh
-    {
-        public Mesh Mesh;
-        public int Width;
-    }
-
-    public class CachedLineRenderer
-    {
-        public Dictionary<string, CachedWordMesh> cachedMeshes = new();
-        private TextDrawableGenerator generator;
-        private int lineHeight = 21;
-        private int lineMargin = 0;
-        private string[] keywords = new[] {"public", "private", "namespace", "using", "static", "void", "class", "string", "new"};
-        private string[] keywords2 = new[] {"(",")","[","]",";", "\"", ".", ","};
-        public CachedLineRenderer()
-        {
-            generator = new TextDrawableGenerator(new BMFont("Resources/Fonts/cascadia.fnt"));
-            generator.Text = "public static void Somi()";
-            generator.Color = Color.White;
-            generator.ScaleStyle = ScaleStyle.ForceLineHeight;
-        }
-
-        public void Render(string[] lines, Vector2I Offset)
-        {
-            for (var i = 0; i < lines.Length; i++)
-            {
-                var line = lines[i];
-
-                var words = line.InclusiveSplit("\\s|\\[|\\]|\\(|\\)|\\.|\\,").ToArray();
-
-                int xPos = 0;
-                foreach (var word in words)
-                {
-                    if (!cachedMeshes.ContainsKey(word))
-                    {
-                        generator.Text = word;
-                        var newmesh = new Mesh();
-                        generator.UpdateBuffer(newmesh);
-                        cachedMeshes.Add(word, new CachedWordMesh {Mesh = newmesh, Width = generator.CalcTextWidth(lineHeight, word)});
-                    }
-
-                    var cachedWordMesh = cachedMeshes[word];
-
-                    var color = Color.Greyscale(.8f);
-                    
-                    if (keywords.Contains(word.Trim()))
-                        color = Color.Magenta;
-                    
-                    if (keywords2.Contains(word.Trim()))
-                        color = Color.Green;
-                    
-                    var position = new Vector2(Offset.X + xPos, Offset.Y + i * (lineHeight + lineMargin));
-                    Application.RenderQueue.Add(new Drawable(cachedWordMesh.Mesh, generator.BMFont.Texture,
-                        new TransformData(position, Vector2.One * lineHeight).CalcModelMatrix(), color));
-                    
-                    xPos += cachedWordMesh.Width;
-                }
-            }
-        }
-    }
-
-
     public class Editor : UIElement
     {
-        private string[] lines;
+        private string[] lines = new []{"Geen file path gekozen. Zet je program argument naar een file path.", "Later maken we wel een mooie home screen.", "", "[S O M I] !(>=) 6 / 2"};
         private List<Vector2I> Cursors;
         private string currentSelectedFilePath;
         private CachedLineRenderer lineRenderer;
+        private Vector2 offset;
+        private Vector2 scrollTarget;
+
+
+        private float scrollLerpSpeed = 40;
+        private int lineHeight = 21;
+        private float scrollAmount = 21 * 2;
 
         public Editor()
         {
             lineRenderer = new CachedLineRenderer();
         }
 
-        public void Start()
-        {
-            EditorWideEvents.OnSelectedFileChanged += EditorWideEventsOnOnSelectedFileChanged;
-        }
-
-        private void EditorWideEventsOnOnSelectedFileChanged(object? sender, PathEventArgs e)
-        {
-            currentSelectedFilePath = e.Path;
-        }
-
-
         public override void Draw()
         {
-            lines =
-                @"using System;
-
-namespace Somi.Desktop
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            new Editor().Draw();
-            Console.WriteLine(""Hello World!"");
-        }
-    }
-}
-".Split('\n');
-/*
-            var tree = CSharpSyntaxTree.ParseText(String.Join('\n', lines));
-            var root = tree.GetCompilationUnitRoot();
-          //  new Walker().Visit(root);
-            foreach (var child in root.ChildNodes())
+            if (currentSelectedFilePath != Application.Context.SelectedFilePath)
             {
-                Render(child);
+                currentSelectedFilePath = Application.Context.SelectedFilePath;
+                lines = File.ReadAllLines(currentSelectedFilePath);
             }
-*/
 
 
-            var drawable1 = new Drawable(
-                PrimitiveMeshes.Quad,
-                Texture.LoadFromFile("testImage.png"),
-                new TransformData(new Vector2(10, 10), new Vector2(100, 100)).CalcModelMatrix());
-
-
+            scrollTarget += new Vector2(0, Application.Input.MouseWheelDelta * scrollAmount);
+            
             RenderQueue.DrawRect(Position, Size, new Color(26, 24, 29));
 
+            if (lines != null)
+            {
+                var clamped = new Vector2(0, Utils.MinMax(-lines.Length * lineHeight + Window.Size.Y - Position.Y, 0, scrollTarget.Y));
+                scrollTarget = Utils.Lerp(scrollTarget, clamped, Window.DeltaTime * scrollLerpSpeed);
 
-            //if (IsClicked)
-         //       RenderQueue.DrawRect(Position, Size, Color.Green);
+                offset = Utils.Lerp(offset, scrollTarget, 15.3f * Window.DeltaTime);
 
 
-            lineRenderer.Render(lines, Position + new Vector2I(1, 1));
-
-            //  var drawable = generator.GetDrawable(new TransformData(Position, Vector2.One * 21).CalcModelMatrix());
-            // RenderQueue.Add(drawable);
-
-            //RenderQueue.Add(drawable1);
+                var roundedDown = new Vector2I((int) MathF.Floor(offset.X), (int) MathF.Floor(offset.Y));
+                lineRenderer.Render(lines, Position + new Vector2I(1, 1) + roundedDown);
+            }
         }
 
         private void Render(SyntaxNode node)
