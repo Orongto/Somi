@@ -31,6 +31,17 @@ namespace Somi.DefaultPlugins
             generator.ScaleStyle = ScaleStyle.ForceLineHeight;
         }
 
+        public Vector2I GetRenderPositionOfCoordinates(string[] lines, Vector2I charCoords)
+        {
+            var y = charCoords.Y * (lineHeight + lineMargin);
+            
+            var x = 35;
+
+            x += generator.CalcTextWidth(lineHeight, lines[charCoords.Y][0..charCoords.X]);
+            
+            return new Vector2I(x, y);
+        }
+            
         public void Render(string[] lines, Vector2I Offset)
         {
 
@@ -43,7 +54,7 @@ namespace Somi.DefaultPlugins
                     continue;
                 
                 
-                var words = line.InclusiveSplit("\\s|\\[|\\]|\\(|\\)|\\.|\\,").ToArray();
+                var words = SplitLineInParts(line);
 
                 int xPos = 35;
  
@@ -72,6 +83,12 @@ namespace Somi.DefaultPlugins
                 Application.RenderQueue.Add(new Drawable(GetCachedMesh(i.ToString()).Mesh, generator.BMFont.Texture,
                     new TransformData(new Vector2(Offset.X, fullOffsetY), Vector2.One * lineHeight).CalcModelMatrix(), Color.Greyscale(.9f).WithAlpha(.2f)));
             }
+        }
+
+        private static string[] SplitLineInParts(string line)
+        {
+            var words = line.InclusiveSplit("\\s|\\[|\\]|\\(|\\)|\\.|\\,").ToArray();
+            return words;
         }
 
         private CachedWordMesh GetCachedMesh(string word)

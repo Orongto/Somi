@@ -68,10 +68,10 @@ namespace Somi.OpenTK.Windowing
         private void Keyboard_KeyDown(KeyboardKeyEventArgs e)
         {
             Key key = (Key)(int)e.Key;
-            if (!State.KeysHeld.Contains(key) && !e.IsRepeat)
+                State.KeysPressed.Add(key);
+            if (!State.KeysHeld.Contains(key))
             {
                 State.KeysHeld.Add(key);
-                State.KeysPressed.Add(key);
             }
         }
 
